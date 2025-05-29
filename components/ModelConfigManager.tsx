@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { AiModel, AiRole, ApiChannel, ModelConfigManager } from '../constants';
+import { testApiChannel } from '../services/apiTestService';
 import { 
   Settings, 
   Plus, 
@@ -159,6 +160,19 @@ const ModelConfigManagerComponent: React.FC<ModelConfigManagerProps> = ({
       showMessage('success', '默认渠道设置成功');
     } catch (error) {
       showMessage('error', '设置默认渠道失败');
+    }
+  };
+
+  const handleTestChannel = async (channel: ApiChannel) => {
+    try {
+      const result = await testApiChannel(channel.baseUrl, channel.apiKey, channel.name);
+      if (result.success) {
+        showMessage('success', result.message);
+      } else {
+        showMessage('error', `测试失败: ${result.message}`);
+      }
+    } catch (error) {
+      showMessage('error', '测试失败: ' + (error instanceof Error ? error.message : '未知错误'));
     }
   };
 
@@ -538,6 +552,13 @@ const ModelConfigManagerComponent: React.FC<ModelConfigManagerProps> = ({
                               title="编辑"
                             >
                               <Edit3 size={16} />
+                            </button>
+                            <button
+                              onClick={() => handleTestChannel(channel)}
+                              className="p-1 text-gray-400 hover:text-green-400"
+                              title="测试"
+                            >
+                              <RefreshCw size={16} />
                             </button>
                             {channel.isCustom && (
                               <button
