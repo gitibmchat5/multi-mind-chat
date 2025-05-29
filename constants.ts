@@ -48,6 +48,17 @@ export const DEFAULT_CHANNELS: ApiChannel[] = [
     timeout: 30000,
     description: 'OpenAI 官方API服务',
     createdAt: new Date()
+  },
+  {
+    id: 'gemini-official',
+    name: 'Gemini 官方',
+    baseUrl: 'https://generativelanguage.googleapis.com/v1beta',
+    apiKey: '',
+    isDefault: false,
+    isCustom: false,
+    timeout: 30000,
+    description: 'Google Gemini API 服务',
+    createdAt: new Date()
   }
 ];
 
@@ -62,6 +73,19 @@ export const DEFAULT_MODELS: AiModel[] = [
     supportsReducedCapacity: true,
     category: 'GPT-4系列',
     maxTokens: 16384,
+    temperature: 0.7,
+    isCustom: false,
+    createdAt: new Date()
+  },
+  {
+    id: 'gemini-pro-default',
+    name: 'Gemini Pro',
+    apiName: 'gemini-pro',
+    channelId: 'gemini-official',
+    supportsImages: true,
+    supportsReducedCapacity: true,
+    category: 'Gemini 系列',
+    maxTokens: 8192,
     temperature: 0.7,
     isCustom: false,
     createdAt: new Date()
